@@ -1,14 +1,14 @@
 
 
 
-function add (x, y){
-    return parseInt(x) - parseInt(y)
+function add (a, b){
+    return parseInt(a) + parseInt(b)
 }
 
 function subtract (x, y){
     return parseInt(x) - parseInt(y)
 }
-
+// Might need to fix multiply and divide
 function multiply (...params){
     let sum = 1
     for (x of params){
@@ -30,21 +30,22 @@ function calculate (x, y, obj){
     //if obj = '+' add x and y
     //else if obj = '-' subtract x and y
     // ...
-    
-    for(i of obj){
-        if(obj.includes(i)){
-            return i
-        } else {
-            return 'idk'
-        }
+    switch (obj){
+        case '+':
+            return add(x,y);
+            break;
+        case '-':
+            return subtract(x,y);
+            break;
+        case '*':
+            return multiply(x,y);
+            break;
+        case '/':
+            return divide(x,y);
+            break;
+        default:
+            console.log('idk')        
     }
-    
-    /*if(operatorObj.includes(z)){
-        return z
-    } else {
-        return 'idk'
-    }
-        */
 }
 
 

@@ -1,5 +1,37 @@
 
-
+* {
+    box-sizing: border-box;
+}
 body {
     background-color: darkslategray;
+}
+.calc-grid {
+    min-height: 500px;
+    width: 400px;
+    background-color: red;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 5px;
+    gap: 3px;
+    align-content: flex-end;
+    border-radius: 20px;
+}
+.display-box {
+    min-width: 100%;
+    background-color: blue;
+    display: flex;
+    justify-content: end;
+}
+.calculations {
+
+}
+.button {
+    height: 40px;
+    margin: 0px;
+    padding: 0px;
+    width: 80px;
+    flex-grow: 1;
+    border-radius: 20px;
 }
