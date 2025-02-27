@@ -1,62 +1,122 @@
 
-
-
-function add (a, b){
-    return parseInt(a) + parseInt(b)
-}
-
-function subtract (x, y){
-    return parseInt(x) - parseInt(y)
-}
-// Might need to fix multiply and divide
-function multiply (...params){
-    let sum = 1
-    for (x of params){
-        sum *= parseInt(x)
-    }
-    return sum
-}
-
-function divide (...params){
-    let sum = 1
-    for(x of params){
-        sum /= parseInt(x)
-    }
-    return sum
-}
-
-
-function calculate (x, y, obj){
-    //if obj = '+' add x and y
-    //else if obj = '-' subtract x and y
-    // ...
-    switch (obj){
+function calculate (x, y, op){
+    let sum 
+    let first = Number(x)
+    let second = Number(y)
+    switch (op){
         case '+':
-            return add(x,y);
+            sum = first + second;
             break;
         case '-':
-            return subtract(x,y);
+            sum = first - second;
             break;
         case '*':
-            return multiply(x,y);
+            sum = first * second;
             break;
         case '/':
-            return divide(x,y);
+            sum = first / second;
             break;
         default:
-            console.log('idk')        
-    }
+            return 'idk'
+    } return sum
+}
+//Dom manipulation
+//reference button query selector
+let myButton = document.querySelectorAll('button')
+let myNums = document.querySelectorAll('.nums')
+let myOps = document.querySelectorAll('.ops')
+let myEqual = document.querySelectorAll('.equal')
+let myClear = document.querySelector('.clear')
+let myDisplay = document.querySelector('.calculations')
+
+let firstNum =  ''
+let secondNum = ''
+let firstArray = []
+let secondArray = []
+let operator = ''
+let operatorArray = []
+
+
+//when nums pressed w/o operator, push el.value to first Array, firstNum = firstArray.join('')
+//when op pressed w/o operator, push el.value to operatorArray, let operator = operatorArr.length-1?
+//when num pressed w/op present, push el.value to secondArr, secondNum = secondArr.join('')
+
+//when op pressed w/op present && secondArr present, push el.value to opArr, then
+//firstNum = calculate(firstNum, secondNum, opArr.length-2), then display firstNum
+//? might need to clear some vars but will try this ^^ for now
+
+function numListeners (x){
+    x.forEach(el => el.addEventListener('click', function(){
+        if(operator == ''){
+            firstArray.push(el.value)
+            console.log(firstArray)
+            firstNum = firstArray.join('')
+            displayContent(firstNum)
+            
+        } else if (operator !== ''){
+            secondArray.push(el.value);
+            secondNum = secondArray.join('')
+            console.log(secondNum)
+            displayContent(secondNum)
+        }
+        
+    }))
 }
 
+function operatorListeners (x){
+    x.forEach(el => el.addEventListener('click', function(){
+        if (operator == ''){
+            operatorArray.push(el.value);
+            //operator cannot be clicked multiple times and operator is defined as most recent op
+            operator = operatorArray[operatorArray.length-1]
+            console.log(operator)
+            displayContent(firstNum + operator)
+        } else if (operator !== '' && secondNum !== ''){
+            operatorArray.push(el.value)
+            //console.log(operatorArray)
+            operator = operatorArray[operatorArray.length-1]
+            firstNum = calculate(firstNum,secondNum,operatorArray[operatorArray.length-2])
+            console.log(firstNum)
+            secondNum = ''
+            secondArray = []
+            console.log(firstNum)
+            displayContent(firstNum + operator)
+        }
 
-//Variables and Operators
-let num1 = 0
-let num2 = 0
-let operatorObj = [{
-    '+': function(x, y){ return parseInt(x) + parseInt(y)},
-    '-': ((x, y)=> x - y),
-    '*': ((x, y)=> x * y),
-    '/': ((x, y)=> x / y),
-}]
+    }))
+}
 
+function equalListeners (x){
+    x.forEach(el => el.addEventListener('click', function(){
+        if (firstNum == '' || operator == ''){
+            displayContent('Need to input values')
+        } else {
+            clearDisplay()
+            displayContent(calculate(firstNum,secondNum,operator))
+        }
+    }))
+}
 
+function clearListener (x){
+    x.addEventListener('click', function(){
+        myDisplay.textContent = ''
+        firstNumber = ''
+        secondNumber = ''
+        operator = ''
+    })
+}
+
+function clearDisplay (){
+    myDisplay.textContent = ''
+}
+
+function displayContent (x){
+    myDisplay.textContent = x
+    //showing ^^ duplicate values in display for some reason.
+}
+
+//Call functions
+numListeners(myNums)
+operatorListeners(myOps)
+equalListeners(myEqual)
+clearListener(myClear)
