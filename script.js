@@ -6,15 +6,19 @@ function calculate (x, y, op){
     switch (op){
         case '+':
             sum = first + second;
+            sum = Math.round(sum * 100000)/100000
             break;
         case '-':
             sum = first - second;
+            sum = Math.round(sum * 100000)/100000
             break;
         case '*':
             sum = first * second;
+            sum = Math.round(sum * 100000)/100000
             break;
         case '/':
             sum = first / second;
+            sum = Math.round(sum * 100000)/100000
             break;
         default:
             return 'idk'
@@ -35,6 +39,7 @@ let firstArray = []
 let secondArray = []
 let operator = ''
 let operatorArray = []
+let errorMsg = 'Who do you think you are?'
 
 
 //when nums pressed w/o operator, push el.value to first Array, firstNum = firstArray.join('')
@@ -47,13 +52,15 @@ let operatorArray = []
 
 function numListeners (x){
     x.forEach(el => el.addEventListener('click', function(){
-        if(operator == ''){
+        if (el.value == '.' && firstArray[firstArray.length-1] === '.'){
+            return
+        } else if(operator == '' && firstArray.length < 5){
             firstArray.push(el.value)
             console.log(firstArray)
             firstNum = firstArray.join('')
             displayContent(firstNum)
             
-        } else if (operator !== ''){
+        } else if (operator !== '' && secondArray.length < 5){
             secondArray.push(el.value);
             secondNum = secondArray.join('')
             console.log(secondNum)
@@ -100,9 +107,12 @@ function equalListeners (x){
 function clearListener (x){
     x.addEventListener('click', function(){
         myDisplay.textContent = ''
-        firstNumber = ''
-        secondNumber = ''
+        firstNum = ''
+        secondNum = ''
+        firstArray = []
+        secondArray = []
         operator = ''
+        operatorArray = []
     })
 }
 
@@ -112,7 +122,6 @@ function clearDisplay (){
 
 function displayContent (x){
     myDisplay.textContent = x
-    //showing ^^ duplicate values in display for some reason.
 }
 
 //Call functions

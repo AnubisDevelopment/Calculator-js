@@ -17,12 +17,15 @@ body {
     gap: 3px;
     align-content: flex-end;
     border-radius: 20px;
+    border: 1px solid black;
 }
 .display-box {
     min-width: 100%;
     background-color: blue;
     display: flex;
     justify-content: end;
+    border: 3px solid black;
+    
 }
 
 .button {
