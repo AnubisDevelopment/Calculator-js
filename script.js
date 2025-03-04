@@ -3,6 +3,9 @@ function calculate (x, y, op){
     let sum 
     let first = Number(x)
     let second = Number(y)
+    if (second==0){
+        console.log('hey')
+    }
     switch (op){
         case '+':
             sum = first + second;
@@ -78,15 +81,19 @@ function operatorListeners (x){
             operator = operatorArray[operatorArray.length-1]
             console.log(operator)
             displayContent(firstNum + operator)
+        } else if (operator !== '' && secondNum === 0){
+            operatorArray.push(el.value);
+            //operator cannot be clicked multiple times and operator is defined as most recent op
+            operator = operatorArray[operatorArray.length-1]
+            displayContent('whatcha doin there?')
         } else if (operator !== '' && secondNum !== ''){
             operatorArray.push(el.value)
-            //console.log(operatorArray)
             operator = operatorArray[operatorArray.length-1]
             firstNum = calculate(firstNum,secondNum,operatorArray[operatorArray.length-2])
             console.log(firstNum)
             secondNum = ''
             secondArray = []
-            console.log(firstNum)
+            console.log(firstNum)   
             displayContent(firstNum + operator)
         }
 
@@ -97,9 +104,17 @@ function equalListeners (x){
     x.forEach(el => el.addEventListener('click', function(){
         if (firstNum == '' || operator == ''){
             displayContent('Need to input values')
-        } else {
+        } else if (operator !== '' && secondNum == 0){
+            displayContent('wtf')
+        }else {
             clearDisplay()
             displayContent(calculate(firstNum,secondNum,operator))
+            firstNum = ''
+            secondNum = ''
+            firstArray = []
+            secondArray = []
+            operator = ''
+            operatorArray = []
         }
     }))
 }
